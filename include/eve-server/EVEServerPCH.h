@@ -84,6 +84,7 @@
 #include "cache/CachedObjectMgr.h"
 
 #include "database/EVEDBUtils.h"
+#include "database/DBInsertBuilder.h"
 
 #include "destiny/DestinyBinDump.h"
 #include "destiny/DestinyStructs.h"

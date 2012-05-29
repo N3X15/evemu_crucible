@@ -57,10 +57,12 @@ SET( cache_SOURCE
 
 SET( database_INCLUDE
      "${TARGET_INCLUDE_DIR}/database/EVEDBUtils.h"
+     "${TARGET_INCLUDE_DIR}/database/DBInsertBuilder.h"
      "${TARGET_INCLUDE_DIR}/database/RowsetReader.h"
      "${TARGET_INCLUDE_DIR}/database/RowsetToSQL.h" )
 SET( database_SOURCE
      "${TARGET_SOURCE_DIR}/database/EVEDBUtils.cpp"
+     "${TARGET_SOURCE_DIR}/database/DBInsertBuilder.cpp"
      "${TARGET_SOURCE_DIR}/database/RowsetReader.cpp"
      "${TARGET_SOURCE_DIR}/database/RowsetToSQL.cpp" )
 

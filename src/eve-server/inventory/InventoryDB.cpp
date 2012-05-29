@@ -25,7 +25,6 @@
 
 #include "EVEServerPCH.h"
 
-
 bool InventoryDB::GetCategory(EVEItemCategories category, CategoryData &into) {
     DBQueryResult res;
 
@@ -1059,8 +1058,43 @@ bool InventoryDB::NewCharacter(uint32 characterID, const CharacterData &data, co
     sDatabase.DoEscapeString(titleEsc, data.title);
     sDatabase.DoEscapeString(descriptionEsc, data.description);
 
+	DBInsertBuilder insert("character_");
+
+	insert.AddColumn("characterID", characterID);
+	insert.AddColumn("accountID",data.accountID);
+	insert.AddColumn("title",titleEsc);
+	insert.AddColumn("description",descriptionEsc);
+	insert.AddColumn("bounty",data.bounty); 
+	insert.AddColumn("balance", data.balance);
+	insert.AddColumn("securityRating", data.securityRating);
+	insert.AddColumn("petitionMessage", "No petition");
+	insert.AddColumn("logonMinutes", data.logonMinutes);
+
+	insert.AddColumn("corporationID", data.corporationID);
+	insert.AddColumn("corpRole", corpData.corpRole);
+	insert.AddColumn("rolesAtAll", corpData.rolesAtAll); 
+	insert.AddColumn("rolesAtBase", corpData.rolesAtBase);
+	insert.AddColumn("rolesAtHQ", corpData.rolesAtHQ);
+	insert.AddColumn("rolesAtOther",corpData.rolesAtOther);
+	insert.AddColumn("corporationDateTime", data.corporationDateTime); 
+	
+	insert.AddColumn("startDateTime",data.startDateTime); 
+	insert.AddColumn("createDateTime",data.createDateTime);
+	insert.AddColumn("ancestryID",data.ancestryID); 
+	insert.AddColumn("careerID",data.careerID);
+	insert.AddColumn("schoolID",data.schoolID); 
+	insert.AddColumn("careerSpecialityID",data.careerSpecialityID); 
+	insert.AddColumn("gender",data.gender);
+	insert.AddColumn("stationID",data.stationID); 
+	insert.AddColumn("solarSystemID",data.solarSystemID); 
+	insert.AddColumn("constellationID",data.constellationID); 
+	insert.AddColumn("regionID", data.regionID);
+	insert.AddColumn("freeRespecs", 2); 
+	insert.AddColumn("nextRespec", 0);
+
     // Table character_ goes first
-    if(!sDatabase.RunQuery(err,
+	if(!sDatabase.RunQuery(err,insert.AsString().c_str()
+		/*
         "INSERT INTO character_"
         // CharacterData:
         "  (characterID, accountID, title, description, bounty, balance, securityRating, petitionMessage,"
@@ -1080,7 +1114,7 @@ bool InventoryDB::NewCharacter(uint32 characterID, const CharacterData &data, co
         data.logonMinutes, data.corporationID, corpData.corpRole, corpData.rolesAtAll, corpData.rolesAtBase, corpData.rolesAtHQ, corpData.rolesAtOther,
         data.corporationDateTime, data.startDateTime, data.createDateTime,
         data.ancestryID, data.careerID, data.schoolID, data.careerSpecialityID, data.gender,
-        data.stationID, data.solarSystemID, data.constellationID, data.regionID, 2, 0
+        data.stationID, data.solarSystemID, data.constellationID, data.regionID, 2, 0*/
     )) {
         _log(DATABASE__ERROR, "Failed to insert character %u: %s.", characterID, err.c_str());
         return false;
